@@ -40,6 +40,31 @@ public static void Retry(int times, TimeSpan delay, Action action)
 	}
 }
 
+public static void RetryWithJitter(int times, TimeSpan delay, Action action)
+{
+	int retries = 0;
+	int backoff = 1;
+
+	Random random = new Random();
+
+	while (true)
+	{
+		try
+		{
+			retries++;
+			action();
+			break;
+		}
+		catch when (retries < times)
+		{
+			double exponentialDelay = delay.TotalSeconds * Math.Pow(2, retries);
+			double jitter = random.NextDouble() * (exponentialDelay / 2);
+			Task.Delay(TimeSpan.FromSeconds(exponentialDelay + jitter)).Wait();
+			backoff += backoff;
+		}
+	}
+}
+
 public static async Task RetryAsync(int times, TimeSpan delay, Func<Task> func)
 {
 	int retries = 0;
