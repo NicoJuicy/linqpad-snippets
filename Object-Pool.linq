@@ -3,8 +3,9 @@
   <Namespace>Microsoft.Extensions.ObjectPool</Namespace>
 </Query>
 
-//https://learn.microsoft.com/en-us/aspnet/core/performance/objectpool?view=aspnetcore-7.0
-
+/// <summary>
+/// https://learn.microsoft.com/en-us/aspnet/core/performance/objectpool
+/// </summary>
 void Main()
 {
 	var pool = new DefaultObjectPool<List<int>>(new DefaultPooledObjectPolicy<List<int>>());
