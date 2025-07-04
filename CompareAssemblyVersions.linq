@@ -19,15 +19,22 @@ void Main()
 
 		if (File.Exists(dll2Path))
 		{
-			var version1 = AssemblyName.GetAssemblyName(dll1).Version;
-			var version2 = AssemblyName.GetAssemblyName(dll2Path).Version;
-
-			// Compare versions and report mismatches
-			if (version1 != version2)
+			try 
 			{
-				Console.WriteLine($"{dllName} version mismatch:");
-				Console.WriteLine($" - Folder1: {version1}");
-				Console.WriteLine($" - Folder2: {version2}");
+				var version1 = AssemblyName.GetAssemblyName(dll1).Version;
+				var version2 = AssemblyName.GetAssemblyName(dll2Path).Version;
+
+				// Compare versions and report mismatches
+				if (version1 != version2)
+				{
+					Console.WriteLine($"{dllName} version mismatch:");
+					Console.WriteLine($" - Folder1: {version1}");
+					Console.WriteLine($" - Folder2: {version2}");
+				}
+			}
+			catch
+			{
+				Console.WriteLine($"{dllName} Couldnt read assembly version for");
 			}
 		}
 		else
